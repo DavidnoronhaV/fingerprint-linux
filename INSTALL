@@ -1,0 +1,32 @@
+#!/bin/bash
+echo 'Fingerprint Reader Installation Script 1.00'
+echo 'What Is Your System Type? Are U Running Arch Linux Or Ubuntu (1/2)'
+read os
+#For Arch Linux
+if [ $os == 1 ]
+then
+  echo 'This Script Will Need To Yaourt , Fingerprint GUI , libfprint , fprint , sudo  , SystemD And libusb'
+  echo 'Kindly Enter Your sudo Password'
+  pacman -S sudo #Just In Case
+  sudo -s
+  cd /etc/xdg/autostart/
+  rm polkit-gnome-authentication-agent-1.desktop
+  rm polkit-kde-authentication-agent-1.desktop
+  sudo pacman -S yaourt libfprint fprint systemd fprint libusb
+  yaourt fingerprint-gui
+  wget #github url
+  cp 40-libfprint0-custom.rules /lib/udev/rules.d/
+  sudo usermod -a -G plugdev $USER
+  echo Restart And Open fingerprint-gui.
+else
+  echo 'Invalid Option Use 1 or 2'
+elif [ $os == 2 ]
+then
+  sudo apt-add-repository ppa:fingerprint/fingerprint-gui && sudo apt-get update
+  sudo apt-get install libbsapi policykit-1-fingerprint-gui fingerprint-gui fprint libfprint
+  wget #github url
+  cp 40-libfprint0-custom.rules /lib/udev/rules.d/
+  sudo usermod -a -G plugdev $USER
+  echo Restart And Open fingerprint-gui.
+fi
+#For Ubuntu
