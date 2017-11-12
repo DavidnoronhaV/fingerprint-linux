@@ -5,28 +5,33 @@ read os
 #For Arch Linux
 if [ $os == 1 ]
 then
-  echo 'This Script Will Need To Yaourt , Fingerprint GUI , libfprint , fprint , sudo  , SystemD And libusb'
+  echo 'This Script Will Need To Install Yaourt , Fingerprint GUI , libfprint , fprint , sudo  , SystemD And libusb'
   echo 'Kindly Enter Your sudo Password'
   pacman -S sudo #Just In Case
   sudo -s
   cd /etc/xdg/autostart/
   rm polkit-gnome-authentication-agent-1.desktop
   rm polkit-kde-authentication-agent-1.desktop
+  cd /tmp
   sudo pacman -S yaourt libfprint fprint systemd fprint libusb
   yaourt fingerprint-gui
-  wget #github url
+  wget https://cdn.rawgit.com/DavidnoronhaV/fingerprint-linux/master/40-libfprint0-custom.rules
   cp 40-libfprint0-custom.rules /lib/udev/rules.d/
   sudo usermod -a -G plugdev $USER
+  wget https://cdn.rawgit.com/DavidnoronhaV/fingerprint-linux/master/sudo
+  cp sudo /etc/pam.d/
   echo Restart And Open fingerprint-gui.
 else
   echo 'Invalid Option Use 1 or 2'
 elif [ $os == 2 ]
 then
+  #Ubuntu
   sudo apt-add-repository ppa:fingerprint/fingerprint-gui && sudo apt-get update
   sudo apt-get install libbsapi policykit-1-fingerprint-gui fingerprint-gui fprint libfprint
-  wget #github url
+  wget https://cdn.rawgit.com/DavidnoronhaV/fingerprint-linux/master/40-libfprint0-custom.rules
   cp 40-libfprint0-custom.rules /lib/udev/rules.d/
   sudo usermod -a -G plugdev $USER
+  wget https://cdn.rawgit.com/DavidnoronhaV/fingerprint-linux/master/sudo
+  cp sudo /etc/pam.d/
   echo Restart And Open fingerprint-gui.
 fi
-#For Ubuntu
