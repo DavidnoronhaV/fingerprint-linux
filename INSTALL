@@ -28,10 +28,5 @@ then
   #Ubuntu
   sudo apt-add-repository ppa:fingerprint/fingerprint-gui && sudo apt-get update
   sudo apt-get install libbsapi policykit-1-fingerprint-gui fingerprint-gui fprint libfprint
-  wget https://cdn.rawgit.com/DavidnoronhaV/fingerprint-linux/master/40-libfprint0-custom.rules
-  cp 40-libfprint0-custom.rules /lib/udev/rules.d/
-  sudo usermod -a -G plugdev $USER
-  wget https://cdn.rawgit.com/DavidnoronhaV/fingerprint-linux/master/sudo
-  cp sudo /etc/pam.d/
-  echo Restart And Open fingerprint-gui.
+  fingerprint-gui
 fi
